@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base UI variables */
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    --radius: 0.5rem;
+
+    /* Store-specific theme variables — overridden per-store in [slug]/layout.tsx */
+    --store-primary: #2563EB;
+    --store-secondary: #6B7280;
+    --store-accent: #2563EB;
+    --store-bg: #FFFFFF;
+    --store-surface: #F9FAFB;
+    --store-text: #111827;
+    --store-text-muted: #6B7280;
+    --store-border: #E5E7EB;
+    --store-price-discount: #DC2626;
+    --store-price-original: #6B7280;
+    --store-font-heading: 'Inter';
+    --store-font-body: 'Inter';
+    --store-radius: 0.375rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .store-primary-bg {
+    background-color: var(--store-primary);
+  }
+  .store-primary-text {
+    color: var(--store-primary);
+  }
+  .store-accent-bg {
+    background-color: var(--store-accent);
+  }
+  .store-bg {
+    background-color: var(--store-bg);
+  }
+  .store-surface-bg {
+    background-color: var(--store-surface);
+  }
+  .store-text {
+    color: var(--store-text);
+  }
+  .store-text-muted {
+    color: var(--store-text-muted);
+  }
+  .store-border {
+    border-color: var(--store-border);
+  }
+}
+
+/* Scrollbar styling for cart drawer */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--store-border) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--store-border);
+  border-radius: 2px;
+}
