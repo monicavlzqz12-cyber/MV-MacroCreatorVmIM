@@ -24,13 +24,7 @@ COPY --from=deps /app/apps/storefront/node_modules ./apps/storefront/node_module
 COPY . .
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-# Generate Prisma client and copy binary to standard locations for pnpm
-RUN pnpm --filter @store-builder/database db:generate && \
-    PRISMA_DIR=$(find node_modules/.pnpm -path "*/@prisma+client*/.prisma" -type d 2>/dev/null | head -1) && \
-    if [ -n "$PRISMA_DIR" ]; then \
-      mkdir -p node_modules/.prisma && cp -r "$PRISMA_DIR/." node_modules/.prisma/; \
-      mkdir -p packages/database/node_modules/.prisma && cp -r "$PRISMA_DIR/." packages/database/node_modules/.prisma/; \
-    fi
+RUN pnpm --filter @store-builder/database db:generate
 RUN pnpm --filter @store-builder/storefront build
 
 # ---- runner ----
@@ -45,8 +39,8 @@ COPY --from=builder /app/apps/storefront/.next/standalone ./
 COPY --from=builder /app/apps/storefront/.next/static ./apps/storefront/.next/static
 COPY --from=builder /app/apps/storefront/public ./apps/storefront/public
 
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/packages/database/node_modules/.prisma ./packages/database/node_modules/.prisma
+# Copy Prisma binary to both root and the pnpm path the standalone uses
+COPY --from=builder /app/node_modules/.pnpm ./node_modules/.pnpm
 COPY --from=builder /app/packages/database/prisma ./packages/database/prisma
 
 USER nextjs
